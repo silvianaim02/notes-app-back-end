@@ -5,10 +5,15 @@ const addNoteHandler = (request, h) => {
   const { title, tags, body } = request.payload;
 
   // Validasi input
-  if (typeof title !== 'string' || !Array.isArray(tags) || typeof body !== 'string') {
+  if (
+    typeof title !== 'string' ||
+    !Array.isArray(tags) ||
+    typeof body !== 'string'
+  ) {
     const response = h.response({
       status: 'fail',
-      message: 'Invalid input. title harus string, tags harus array, dan body harus string.',
+      message:
+        'Invalid input. title harus string, tags harus array, dan body harus string.',
     });
     response.code(400); // Bad Request
     return response;
@@ -56,4 +61,25 @@ const getAllNotesHandler = () => ({
   },
 });
 
-module.exports = { addNoteHandler, getAllNotesHandler };
+const getNoteByIdHandler = (request, h) => {
+  const { id } = request.params;
+
+  const note = notes.filter((n) => n.id === id)[0];
+
+  if (note !== undefined) {
+    return {
+      status: 'success',
+      data: {
+        note,
+      },
+    };
+  }
+  const response = h.response({
+    status: 'fail',
+    message: 'Catatan tidak ditemukan',
+  });
+  response.code(404);
+  return response;
+};
+
+module.exports = { addNoteHandler, getAllNotesHandler, getNoteByIdHandler };
