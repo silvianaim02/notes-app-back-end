@@ -12,6 +12,8 @@
   "rules": {
     "no-multiple-empty-lines": "off",
     "eol-last": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-console": "off"
   }
 }
